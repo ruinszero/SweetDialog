@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="success_stroke_color">#A5DC86</color>
+    <color name="float_transparent">#00000000</color>
+    <color name="main_disabled_color">#838383</color>
+    <color name="main_disabled_stroke_color">#707070</color>
+    <color name="warning_stroke_color">#F8BB86</color>
+    <color name="main_green_stroke_color">#60bf04</color>
+    <color name="main_green_color">#6bd505</color>
+</resources>
