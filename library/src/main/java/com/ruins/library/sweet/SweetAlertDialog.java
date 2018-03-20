@@ -5,12 +5,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.Transformation;
@@ -24,8 +22,9 @@ import android.widget.TextView;
 
 import com.ruins.library.R;
 
-import java.util.List;
-
+/**
+ * @author jihao
+ */
 public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     private View mDialogView;
     private AnimationSet mModalInAnim;
@@ -46,7 +45,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     private String mCancelText;
     private String mConfirmText;
     private String mNeutralText;
-    private int mAlertType;
+    private AlertType mAlertAlertType;
     private FrameLayout mErrorFrame;
     private FrameLayout mSuccessFrame;
     private FrameLayout mProgressFrame;
@@ -68,12 +67,15 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     private OnSweetClickListener mNeutralClickListener;
     private boolean mCloseFromCancel;
 
-    public static final int NORMAL_TYPE = 0;
-    public static final int ERROR_TYPE = 1;
-    public static final int SUCCESS_TYPE = 2;
-    public static final int WARNING_TYPE = 3;
-    public static final int CUSTOM_IMAGE_TYPE = 4;
-    public static final int PROGRESS_TYPE = 5;
+
+    public enum AlertType {
+        NORMAL_TYPE,
+        ERROR_TYPE,
+        SUCCESS_TYPE,
+        WARNING_TYPE,
+        CUSTOM_IMAGE_TYPE,
+        PROGRESS_TYPE
+    }
 
 
     public static boolean DARK_STYLE = false;
@@ -92,30 +94,18 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     }
 
     public SweetAlertDialog(Context context) {
-        this(context, NORMAL_TYPE);
+        this(context, AlertType.NORMAL_TYPE);
     }
 
-    public SweetAlertDialog(Context context, int alertType) {
+    public SweetAlertDialog(Context context, AlertType alertAlertType) {
         super(context, DARK_STYLE ? R.style.alert_dialog_dark : R.style.alert_dialog_light);
-        setCancelable(true);
-        setCanceledOnTouchOutside(true); //TODO was false
-        mAlertType = alertType;
+        //点击 dialog 框体之外与返回键会取消显示 dialog
+        // setCancelable(true);
+        //返回键会取消显示 dialog，点击空白区域不会
+        setCanceledOnTouchOutside(false);
+        mAlertAlertType = alertAlertType;
         mErrorInAnim = OptAnimationLoader.loadAnimation(getContext(), R.anim.error_frame_in);
         mErrorXInAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.error_x_in);
-        // 2.3.x system don't support alpha-animation on layer-list drawable
-        // remove it from animation set
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-            List<Animation> childAnims = mErrorXInAnim.getAnimations();
-            int idx = 0;
-            for (; idx < childAnims.size(); idx++) {
-                if (childAnims.get(idx) instanceof AlphaAnimation) {
-                    break;
-                }
-            }
-            if (idx < childAnims.size()) {
-                childAnims.remove(idx);
-            }
-        }
         mSuccessBowAnim = OptAnimationLoader.loadAnimation(getContext(), R.anim.success_bow_roate);
         mSuccessLayoutAnimSet = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.success_mask_layout);
         mModalInAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.modal_in);
@@ -191,7 +181,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         setCancelText(mCancelText);
         setConfirmText(mConfirmText);
         setNeutralText(mNeutralText);
-        changeAlertType(mAlertType, true);
+        changeAlertType(mAlertAlertType, true);
 
     }
 
@@ -231,17 +221,17 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     }
 
     private void playAnimation() {
-        if (mAlertType == ERROR_TYPE) {
+        if (mAlertAlertType == AlertType.ERROR_TYPE) {
             mErrorFrame.startAnimation(mErrorInAnim);
             mErrorX.startAnimation(mErrorXInAnim);
-        } else if (mAlertType == SUCCESS_TYPE) {
+        } else if (mAlertAlertType == AlertType.SUCCESS_TYPE) {
             mSuccessTick.startTickAnim();
             mSuccessRightMask.startAnimation(mSuccessBowAnim);
         }
     }
 
-    private void changeAlertType(int alertType, boolean fromCreate) {
-        mAlertType = alertType;
+    private void changeAlertType(AlertType alertType, boolean fromCreate) {
+        mAlertAlertType = alertType;
         // call after created views
         if (mDialogView != null) {
             if (!fromCreate) {
@@ -249,7 +239,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
                 restore();
             }
             mConfirmButton.setVisibility(mHideConfirmButton ? View.GONE : View.VISIBLE);
-            switch (mAlertType) {
+            switch (mAlertAlertType) {
                 case ERROR_TYPE:
                     mErrorFrame.setVisibility(View.VISIBLE);
                     break;
@@ -271,6 +261,8 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
                     mConfirmButton.setVisibility(View.GONE);
 //                    mButtonsContainer.setVisibility(View.GONE);
                     break;
+                    default:
+                        break;
             }
             adjustButtonContainerVisibility();
             if (!fromCreate) {
@@ -279,11 +271,11 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         }
     }
 
-    public int getAlerType() {
-        return mAlertType;
+    public AlertType getAlerType() {
+        return mAlertAlertType;
     }
 
-    public void changeAlertType(int alertType) {
+    public void changeAlertType(AlertType alertType) {
         changeAlertType(alertType, false);
     }
 
