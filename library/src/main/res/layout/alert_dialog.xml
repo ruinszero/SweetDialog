@@ -8,7 +8,6 @@
     android:layoutDirection="ltr">
 
     <LinearLayout
-
         android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,7 +85,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/success_circle" />
 
-            <com.ruins.android.ui.widget.SweetAlert.SuccessTickView
+            <com.ruins.library.sweet.SuccessTickView
                 android:id="@+id/success_tick"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

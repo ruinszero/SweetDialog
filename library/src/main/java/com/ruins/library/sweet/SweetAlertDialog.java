@@ -45,7 +45,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     private String mCancelText;
     private String mConfirmText;
     private String mNeutralText;
-    private AlertType mAlertAlertType;
+    private SweetAlertType mAlertAlertType;
     private FrameLayout mErrorFrame;
     private FrameLayout mSuccessFrame;
     private FrameLayout mProgressFrame;
@@ -68,15 +68,6 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     private boolean mCloseFromCancel;
 
 
-    public enum AlertType {
-        NORMAL_TYPE,
-        ERROR_TYPE,
-        SUCCESS_TYPE,
-        WARNING_TYPE,
-        CUSTOM_IMAGE_TYPE,
-        PROGRESS_TYPE
-    }
-
 
     public static boolean DARK_STYLE = false;
 
@@ -94,10 +85,10 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     }
 
     public SweetAlertDialog(Context context) {
-        this(context, AlertType.NORMAL_TYPE);
+        this(context, SweetAlertType.NORMAL_TYPE);
     }
 
-    public SweetAlertDialog(Context context, AlertType alertAlertType) {
+    public SweetAlertDialog(Context context, SweetAlertType alertAlertType) {
         super(context, DARK_STYLE ? R.style.alert_dialog_dark : R.style.alert_dialog_light);
         //点击 dialog 框体之外与返回键会取消显示 dialog
         // setCancelable(true);
@@ -221,16 +212,16 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     }
 
     private void playAnimation() {
-        if (mAlertAlertType == AlertType.ERROR_TYPE) {
+        if (mAlertAlertType == SweetAlertType.ERROR_TYPE) {
             mErrorFrame.startAnimation(mErrorInAnim);
             mErrorX.startAnimation(mErrorXInAnim);
-        } else if (mAlertAlertType == AlertType.SUCCESS_TYPE) {
+        } else if (mAlertAlertType == SweetAlertType.SUCCESS_TYPE) {
             mSuccessTick.startTickAnim();
             mSuccessRightMask.startAnimation(mSuccessBowAnim);
         }
     }
 
-    private void changeAlertType(AlertType alertType, boolean fromCreate) {
+    private void changeAlertType(SweetAlertType alertType, boolean fromCreate) {
         mAlertAlertType = alertType;
         // call after created views
         if (mDialogView != null) {
@@ -271,11 +262,11 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         }
     }
 
-    public AlertType getAlerType() {
+    public SweetAlertType getAlerType() {
         return mAlertAlertType;
     }
 
-    public void changeAlertType(AlertType alertType) {
+    public void changeAlertType(SweetAlertType alertType) {
         changeAlertType(alertType, false);
     }
 
