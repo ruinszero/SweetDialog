@@ -8,17 +8,14 @@
     <shape
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:shape="ring"
-        android:thickness="2dp"
+        android:thickness="3dp"
         android:innerRadiusRatio="3"
         android:thicknessRatio="8"
         android:useLevel="false">
         <gradient
-            android:type="sweep"
-            android:useLevel="false"
-            android:startColor="#6BD3FF"
-            android:centerColor="#FF7121"
-            android:centerY="0.50"
-            android:endColor="#FFFF00" />
+            android:endColor="@color/blue"
+            android:startColor="@color/float_transparent"
+            android:type="sweep" />
     </shape>
 
 </animated-rotate>

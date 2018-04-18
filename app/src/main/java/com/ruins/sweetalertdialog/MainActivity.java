@@ -16,6 +16,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.btn_error).setOnClickListener(v -> new SweetAlertDialog(this, SweetAlertType.ERROR_TYPE).show());
+        findViewById(R.id.btn_error).setOnClickListener(v -> new SweetAlertDialog(this, SweetAlertType.PROGRESS_TYPE).show());
     }
 }

@@ -126,7 +126,8 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:indeterminateDrawable="@drawable/progress" />
+                android:indeterminateDrawable="@drawable/progress"
+                android:progress="50"/>
         </FrameLayout>
 
         <TextView
