@@ -8,7 +8,7 @@
   <dimen name="fab_translation_z_pressed">6dp</dimen>
   <integer name="default_cycle_duration">2000</integer>
   <dimen name="futuresimple_fab_shadow_offset">3dp</dimen>
-  <dimen name="alert_width">290dp</dimen>
+  <dimen name="alert_width">300dp</dimen>
   <dimen name="common_circle_width">3dp</dimen>
   <dimen name="progress_circle_radius">34dp</dimen>
 

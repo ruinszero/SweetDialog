@@ -1,6 +1,7 @@
 package com.ruins.sweetalertdialog;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
 import com.ruins.library.sweet.SweetAlertDialog;
@@ -16,6 +17,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.btn_error).setOnClickListener(v -> new SweetAlertDialog(this, SweetAlertType.PROGRESS_TYPE).show());
+        findViewById(R.id.btn_error)
+                .setOnClickListener(v -> {
+                            new SweetAlertDialog(this, SweetAlertType.ERROR_TYPE)
+                                    .setContentText("测试")
+                                    .setConfirmText("zzz")
+                                    .show();
+                        }
+                );
     }
 }
